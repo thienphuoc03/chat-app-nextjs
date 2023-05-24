@@ -4,9 +4,9 @@ interface Props {}
 
 const page = (props: Props) => {
   return (
-    <>
-      <div>page</div>
-    </>
+    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+      <p>dashboard</p>
+    </main>
   );
 };
 
