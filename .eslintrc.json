@@ -1,8 +1,4 @@
 {
   "extends": "next/core-web-vitals",
-  "plugins": ["react-hooks"],
-  "rules": {
-    "react-hooks/rules-of-hooks": "disable",
-    "react-hooks/exhaustive-deps": "disable"
-  }
+  "plugins": ["react-hooks"]
 }

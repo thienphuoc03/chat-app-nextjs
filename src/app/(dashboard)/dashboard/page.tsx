@@ -7,6 +7,7 @@ import { getServerSession } from 'next-auth';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { format } from 'date-fns';
 
 const page = async ({}) => {
   const session = await getServerSession(authOptions);
@@ -23,14 +24,26 @@ const page = async ({}) => {
         -1
       )) as string[];
 
-      const lastMessage = JSON.parse(lastMessageRaw) as Message;
+      if (lastMessageRaw) {
+        const lastMessage = JSON.parse(lastMessageRaw) as Message;
 
-      return {
-        ...friend,
-        lastMessage,
-      };
+        return {
+          ...friend,
+          lastMessage,
+        };
+      } else {
+        // Handle the case when lastMessageRaw is undefined or null
+        return {
+          ...friend,
+          lastMessage: null, // or any other default value
+        };
+      }
     })
   );
+
+  const formatTimestamp = (timestamp: number) => {
+    return format(timestamp, 'HH:mm');
+  };
 
   return (
     <div className="container py-12">
@@ -70,11 +83,18 @@ const page = async ({}) => {
                 <h4 className="text-lg font-semibold">{friend.name}</h4>
                 <p className="mt-1 max-w-md">
                   <span className="text-zinc-400">
-                    {friend.lastMessage.senderId === session.user.id
+                    {friend.lastMessage &&
+                    friend.lastMessage.senderId === session.user.id
                       ? 'You: '
                       : ''}
                   </span>
-                  {friend.lastMessage.text}
+                  {friend.lastMessage ? friend.lastMessage.text : 'No messages'}
+                  <span className="text-zinc-400 text-xs">
+                    -
+                    {friend.lastMessage
+                      ? formatTimestamp(friend.lastMessage.timestamp)
+                      : null}
+                  </span>
                 </p>
               </div>
             </Link>

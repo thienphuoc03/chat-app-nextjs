@@ -1,7 +1,7 @@
-import { LucideProps, UserPlus } from 'lucide-react';
+import { LucideProps, UserPlus, MessagesSquare } from 'lucide-react';
 
 export const Icons = {
-  Logo: (props: LucideProps) => (
+  Send: (props: LucideProps) => (
     <svg {...props} viewBox="0 0 2000 2000">
       <path
         fill="currentColor"
@@ -10,6 +10,7 @@ export const Icons = {
     </svg>
   ),
   UserPlus,
+  MessagesSquare,
 };
 
 export type Icon = keyof typeof Icons;
